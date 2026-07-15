@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curso virtual de LaTeX + Overleaf aplicado a ingeniería. Aprende a crear tesis, reportes técnicos, ecuaciones, tablas, bibliografía automática y presentaciones profesionales.">
+  <title>Curso de LaTeX + Overleaf | INGENIUM ACADEMY</title>
+  <style>
+    :root {
+      --green-950: #042819;
+      --green-900: #06351f;
+      --green-800: #0a4d2d;
+      --green-700: #0f6f3a;
+      --green-600: #129447;
+      --green-500: #18b85a;
+      --green-100: #e8f7ed;
+      --green-50: #f3fbf6;
+      --lime: #b7ee69;
+      --lime-soft: #e8ffc6;
+      --ink: #081b24;
+      --muted: #5b6c74;
+      --line: #d7eadf;
+      --paper: #ffffff;
+      --cream: #fbfff8;
+      --danger: #b4232a;
+      --shadow: 0 24px 70px rgba(4, 40, 25, 0.16);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --container: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(183, 238, 105, 0.18), transparent 34rem),
+        linear-gradient(180deg, #f7fcf8 0%, #ffffff 48%, #f4faf6 100%);
+      font-family: "Aptos", "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image:
+        linear-gradient(rgba(4, 40, 25, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(4, 40, 25, 0.8) 1px, transparent 1px);
+      background-size: 42px 42px;
+      z-index: -3;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      background: linear-gradient(90deg, var(--green-950), var(--green-800));
+      color: white;
+      font-weight: 850;
+      font-size: 0.92rem;
+      letter-spacing: 0.01em;
+    }
+
+    .announcement .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 46px;
+      text-align: center;
+    }
+
+    .announcement .dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--lime);
+      box-shadow: 0 0 0 8px rgba(183, 238, 105, 0.14);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(215, 234, 223, 0.8);
+    }
+
+    .header-row {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-motion-shell {
+      --logo-spin: 0deg;
+      --logo-lift: 0px;
+      --logo-tilt: 0deg;
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      flex: 0 0 auto;
+      perspective: 900px;
+      transform: translateZ(0);
+    }
+
+    .logo-motion-shell::before {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border-radius: 24px;
+      background:
+        conic-gradient(from var(--logo-spin), transparent 0 18%, rgba(183, 238, 105, 0.95), rgba(18, 184, 90, 0.75), transparent 58% 100%);
+      opacity: 0.62;
+      filter: blur(0.2px);
+      animation: logoOrbit 5.8s linear infinite;
+      transition: opacity 220ms ease, filter 220ms ease, transform 220ms ease;
+    }
+
+    .logo-motion-shell::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 26% 20%, rgba(255, 255, 255, 0.86), transparent 12px),
+        radial-gradient(circle at 76% 78%, rgba(183, 238, 105, 0.48), transparent 18px);
+      opacity: 0;
+      transform: scale(0.82);
+      animation: logoAura 3.4s ease-in-out infinite;
+    }
+
+    .brand-logo {
+      position: relative;
+      z-index: 2;
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: white;
+      padding: 7px;
+      box-shadow: 0 12px 28px rgba(4, 40, 25, 0.11);
+      transform:
+        translateY(var(--logo-lift))
+        rotate(var(--logo-spin))
+        rotateY(var(--logo-tilt));
+      transform-style: preserve-3d;
+      transition: transform 140ms ease-out, box-shadow 180ms ease, filter 180ms ease;
+      will-change: transform;
+    }
+
+    .brand:hover .brand-logo {
+      box-shadow: 0 18px 38px rgba(18, 148, 71, 0.22);
+      filter: saturate(1.08) contrast(1.03);
+    }
+
+    .logo-motion-shell.logo-scrolling::before {
+      opacity: 1;
+      filter: drop-shadow(0 0 14px rgba(183, 238, 105, 0.75));
+      animation-duration: 1.4s;
+      transform: scale(1.06);
+    }
+
+    .logo-motion-shell.logo-scrolling .brand-logo {
+      box-shadow:
+        0 18px 42px rgba(18, 148, 71, 0.24),
+        0 0 0 6px rgba(183, 238, 105, 0.12);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1.03rem;
+      letter-spacing: -0.02em;
+      color: var(--green-950);
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 1px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .overleaf-mini {
+      height: 44px;
+      width: 132px;
+      object-fit: contain;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 8px 12px;
+    }
+
+    .btn {
+      --btn-bg: var(--green-600);
+      --btn-color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 22px;
+      background: var(--btn-bg);
+      color: var(--btn-color);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(18, 148, 71, 0.26);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(18, 148, 71, 0.31);
+    }
+
+    .btn:focus-visible {
+      outline: 4px solid rgba(183, 238, 105, 0.9);
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      --btn-bg: rgba(255, 255, 255, 0.12);
+      --btn-color: white;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      --btn-bg: white;
+      --btn-color: var(--green-900);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(4, 40, 25, 0.08);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(4, 40, 25, 0.96), rgba(6, 53, 31, 0.93) 55%, rgba(18, 148, 71, 0.88)),
+        url("assets/ecuaciones-9x16.png") center/cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 78% 10%, rgba(183, 238, 105, 0.25), transparent 28rem),
+        radial-gradient(circle at 16% 90%, rgba(255, 255, 255, 0.12), transparent 22rem);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: -5%;
+      right: -5%;
+      bottom: -88px;
+      height: 155px;
+      background: #f7fcf8;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(330px, 0.62fr);
+      gap: 42px;
+      align-items: center;
+      min-height: 760px;
+      padding: 76px 0 128px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--lime-soft);
+      font-size: 0.84rem;
+      font-weight: 950;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+
+    h1 {
+      max-width: 770px;
+      margin: 24px 0 0;
+      font-size: clamp(3.05rem, 7vw, 5.9rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+      text-wrap: balance;
+    }
+
+    .latex-word {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -0.095em;
+      color: white;
+      text-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-lead {
+      max-width: 700px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+      max-width: 760px;
+    }
+
+    .trust-item {
+      min-height: 94px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .trust-item span {
+      display: block;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-top: 5px;
+      color: white;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero-panel {
+      position: relative;
+      align-self: stretch;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .hero-card {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 251, 247, 0.98));
+      color: var(--ink);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 80% 0%, rgba(183, 238, 105, 0.28), transparent 15rem),
+        linear-gradient(180deg, rgba(18, 148, 71, 0.06), transparent 40%);
+      pointer-events: none;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 18px;
+    }
+
+    .instructor-photo {
+      overflow: hidden;
+      border-radius: 26px;
+      min-height: 310px;
+      background: var(--green-100);
+      box-shadow: inset 0 0 0 1px rgba(4, 40, 25, 0.08);
+    }
+
+    .instructor-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 310px;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+
+    .teacher-mini {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px;
+      border-radius: 22px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .teacher-mini small {
+      display: block;
+      color: var(--green-700);
+      font-weight: 950;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .teacher-mini strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.03rem;
+      line-height: 1.15;
+      color: var(--green-950);
+    }
+
+    .price-chip {
+      flex: 0 0 auto;
+      text-align: right;
+      color: var(--green-950);
+    }
+
+    .price-chip span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .price-chip b {
+      display: block;
+      font-size: 1.55rem;
+      letter-spacing: -0.05em;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .count-box {
+      padding: 10px 8px;
+      text-align: center;
+      border-radius: 15px;
+      background: var(--green-950);
+      color: white;
+    }
+
+    .count-box strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1;
+      color: var(--lime);
+    }
+
+    .count-box span {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.66rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .micro-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .section {
+      position: relative;
+      padding: 92px 0;
+    }
+
+    .section-tight {
+      padding: 64px 0;
+    }
+
+    .section-heading {
+      max-width: 820px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: var(--green-700);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before,
+    .section-kicker::after {
+      content: "";
+      width: 26px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--green-500);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--green-950);
+      font-size: clamp(2.15rem, 4.7vw, 4rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      text-wrap: balance;
+    }
+
+    .section-heading p {
+      margin: 18px auto 0;
+      max-width: 670px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      font-weight: 650;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .story-card,
+    .solution-card {
+      border-radius: var(--radius-xl);
+      padding: clamp(26px, 5vw, 46px);
+      box-shadow: 0 18px 48px rgba(4, 40, 25, 0.1);
+    }
+
+    .story-card {
+      background:
+        linear-gradient(135deg, rgba(4, 40, 25, 0.94), rgba(10, 77, 45, 0.92)),
+        url("assets/ecuaciones-4x5.png") center/cover no-repeat;
+      color: white;
+    }
+
+    .story-card h3,
+    .solution-card h3 {
+      margin: 0 0 16px;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .story-card p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 1.07rem;
+      font-weight: 650;
+    }
+
+    .solution-card {
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .pas-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .pas-item {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 19px;
+      background: var(--green-50);
+      border: 1px solid var(--line);
+    }
+
+    .pas-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: var(--green-600);
+      color: white;
+      font-weight: 950;
+    }
+
+    .pas-item strong {
+      display: block;
+      color: var(--green-950);
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+
+    .pas-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .outcome-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 46px rgba(4, 40, 25, 0.08);
+    }
+
+    .outcome-card::after {
+      content: "";
+      position: absolute;
+      right: -42px;
+      top: -42px;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: rgba(183, 238, 105, 0.32);
+    }
+
+    .outcome-card .num {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      color: white;
+      background: var(--green-950);
+      font-weight: 950;
+    }
+
+    .outcome-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 20px 0 10px;
+      color: var(--green-950);
+      font-size: 1.28rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .outcome-card p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .curriculum {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(183, 238, 105, 0.16), transparent 24rem),
+        linear-gradient(180deg, var(--green-950), #052d1d);
+      color: white;
+      overflow: hidden;
+    }
+
+    .curriculum .section-kicker,
+    .curriculum h2 {
+      color: white;
+    }
+
+    .curriculum .section-heading p {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .module {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    }
+
+    .module-number {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100px;
+      padding: 18px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, var(--green-600), var(--green-800));
+    }
+
+    .module-number strong {
+      font-size: 2.15rem;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+
+    .module-number span {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.72rem;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .module h3 {
+      margin: 2px 0 8px;
+      color: white;
+      font-size: 1.35rem;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+
+    .module p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-weight: 600;
+    }
+
+    .bonus-band {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .bonus {
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(183, 238, 105, 0.1);
+      border: 1px solid rgba(183, 238, 105, 0.18);
+    }
+
+    .bonus strong {
+      display: block;
+      color: var(--lime);
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+
+    .bonus span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .teacher-section {
+      overflow: hidden;
+    }
+
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.74fr) 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .teacher-portrait {
+      position: relative;
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(18, 148, 71, 0.14), rgba(183, 238, 105, 0.16)),
+        white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .teacher-portrait img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 17%;
+      border-radius: 25px;
+    }
+
+    .teacher-badge {
+      position: absolute;
+      left: 34px;
+      right: 34px;
+      bottom: 34px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 18px 46px rgba(4, 40, 25, 0.13);
+    }
+
+    .teacher-badge span {
+      color: var(--green-700);
+      font-size: 0.76rem;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .teacher-badge strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--green-950);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .teacher-copy {
+      padding: 8px 0;
+    }
+
+    .teacher-copy h2 {
+      margin-bottom: 20px;
+    }
+
+    .teacher-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      font-weight: 650;
+    }
+
+    .credential-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .credential {
+      padding: 18px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 34px rgba(4, 40, 25, 0.06);
+    }
+
+    .credential strong {
+      display: block;
+      color: var(--green-950);
+      line-height: 1.2;
+    }
+
+    .credential span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .offer {
+      background:
+        linear-gradient(180deg, #f7fcf8, #ffffff);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.74fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .price-table {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .price-card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(4, 40, 25, 0.08);
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--green-600);
+      background:
+        radial-gradient(circle at top right, rgba(183, 238, 105, 0.28), transparent 13rem),
+        white;
+      transform: translateY(-8px);
+    }
+
+    .ribbon {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--green-100);
+      color: var(--green-800);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .price-card h3 {
+      margin: 0;
+      color: var(--green-950);
+      font-size: 1.5rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .price {
+      margin: 18px 0 0;
+      color: var(--green-950);
+      font-size: 3.4rem;
+      line-height: 0.92;
+      font-weight: 950;
+      letter-spacing: -0.07em;
+    }
+
+    .price small {
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--muted);
+    }
+
+    .price-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .payment-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .qr-panel {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--green-950);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .qr-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .qr-head h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .qr-panel img {
+      width: 168px;
+      height: 168px;
+      object-fit: contain;
+      margin-top: 18px;
+      padding: 10px;
+      border-radius: 20px;
+      background: white;
+    }
+
+    .payment-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .payment-list li {
+      position: relative;
+      padding: 14px 14px 14px 42px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .payment-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 14px;
+      top: 13px;
+      display: grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--green-600);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 950;
+    }
+
+    .payment-list strong {
+      color: var(--green-950);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 0.72fr 1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .faq-intro {
+      position: sticky;
+      top: 120px;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: var(--green-950);
+      color: white;
+    }
+
+    .faq-intro h2 {
+      color: white;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+    }
+
+    .faq-intro p {
+      margin: 16px 0 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 650;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 14px 34px rgba(4, 40, 25, 0.05);
+    }
+
+    .faq-question {
+      width: 100%;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 22px;
+      border: 0;
+      background: transparent;
+      color: var(--green-950);
+      text-align: left;
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .faq-question span {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green-100);
+      color: var(--green-800);
+      transition: transform 180ms ease;
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 220ms ease;
+    }
+
+    .faq-answer > div {
+      overflow: hidden;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      padding: 0 22px 22px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .faq-item.open .faq-answer {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-item.open .faq-question span {
+      transform: rotate(45deg);
+    }
+
+    .final-cta {
+      position: relative;
+      overflow: hidden;
+      padding: 82px 0;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(4, 40, 25, 0.96), rgba(18, 148, 71, 0.92)),
+        url("assets/ecuaciones-4x5.png") center/cover no-repeat;
+    }
+
+    .final-cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 24%, rgba(183, 238, 105, 0.24), transparent 25rem);
+      pointer-events: none;
+    }
+
+    .final-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 330px;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .final-cta h2 {
+      color: white;
+    }
+
+    .final-cta p {
+      max-width: 690px;
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.12rem;
+      font-weight: 650;
+    }
+
+    .final-box {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .final-box strong {
+      display: block;
+      color: var(--lime);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .final-box span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 650;
+    }
+
+    .site-footer {
+      padding: 28px 0 96px;
+      color: var(--muted);
+      background: #f7fcf8;
+      font-weight: 650;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .footer-row strong {
+      color: var(--green-950);
+    }
+
+    .sticky-mobile {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 22px;
+      background: rgba(4, 40, 25, 0.94);
+      color: white;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(14px);
+    }
+
+    .sticky-mobile span {
+      display: block;
+      padding-left: 6px;
+      font-size: 0.82rem;
+      line-height: 1.15;
+      font-weight: 850;
+    }
+
+    .sticky-mobile .btn {
+      min-height: 46px;
+      padding: 0 16px;
+      white-space: nowrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .problem-grid,
+      .teacher-grid,
+      .offer-grid,
+      .faq-grid,
+      .final-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        padding: 58px 0 112px;
+      }
+
+      .hero-panel {
+        max-width: 520px;
+      }
+
+      .trust-strip,
+      .outcome-grid,
+      .bonus-band {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .faq-intro {
+        position: relative;
+        top: auto;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .announcement .container {
+        font-size: 0.82rem;
+      }
+
+      .header-row {
+        min-height: 72px;
+      }
+
+      .logo-motion-shell {
+        width: 60px;
+        height: 60px;
+      }
+
+      .logo-motion-shell::before {
+        inset: -3px;
+        border-radius: 20px;
+      }
+
+      .brand-logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+      }
+
+      .brand-copy span,
+      .overleaf-mini,
+      .header-actions .btn {
+        display: none;
+      }
+
+      .container {
+        width: min(100% - 26px, var(--container));
+      }
+
+      .hero {
+        border-bottom-left-radius: 34px;
+        border-bottom-right-radius: 34px;
+      }
+
+      .hero::after {
+        display: none;
+      }
+
+      .hero-grid {
+        padding: 42px 0 46px;
+        gap: 28px;
+      }
+
+      h1 {
+        font-size: clamp(2.72rem, 15vw, 4.4rem);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .trust-strip,
+      .outcome-grid,
+      .bonus-band,
+      .credential-list,
+      .price-table {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-item {
+        min-height: auto;
+      }
+
+      .section {
+        padding: 66px 0;
+      }
+
+      .section-tight {
+        padding: 52px 0;
+      }
+
+      .module {
+        grid-template-columns: 1fr;
+      }
+
+      .module-number {
+        min-height: auto;
+      }
+
+      .teacher-badge {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin: -32px 14px 0;
+      }
+
+      .qr-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .qr-panel img {
+        width: min(100%, 210px);
+        height: auto;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sticky-mobile {
+        display: flex;
+      }
+
+      .site-footer {
+        padding-bottom: 98px;
+      }
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 4px;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .scroll-progress span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background: linear-gradient(90deg, var(--lime), #ffffff, var(--green-500));
+      box-shadow: 0 0 18px rgba(183, 238, 105, 0.78);
+      transition: transform 90ms linear;
+    }
+
+    .hero-kinetic {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 80%, transparent 100%);
+    }
+
+    .hero-kinetic span {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      color: rgba(232, 255, 198, 0.48);
+      background: rgba(255, 255, 255, 0.055);
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.12);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(0.86rem, 1.7vw, 1.35rem);
+      white-space: nowrap;
+      transform: translate3d(0, 0, 0) rotate(var(--r));
+      animation: formulaFloat var(--d) ease-in-out infinite;
+      animation-delay: var(--delay);
+      will-change: transform, opacity;
+    }
+
+    .hero-kinetic span:nth-child(2n) {
+      color: rgba(255, 255, 255, 0.38);
+      animation-name: formulaFloatReverse;
+    }
+
+    .hero-kinetic span:nth-child(3n) {
+      color: rgba(183, 238, 105, 0.42);
+      transform-origin: center;
+    }
+
+    .hero-copy {
+      animation: heroCopyRise 780ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+    }
+
+    .hero-card {
+      transform-style: preserve-3d;
+      animation: cardBreath 5.8s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 47%, transparent 58%);
+      transform: translateX(-48%) rotate(8deg);
+      animation: glassSweep 6.5s ease-in-out infinite;
+    }
+
+    .card-content {
+      transform: translateZ(22px);
+    }
+
+    .instructor-photo img,
+    .teacher-portrait img {
+      transition: transform 500ms ease, filter 500ms ease;
+    }
+
+    .hero-card:hover .instructor-photo img,
+    .teacher-portrait:hover img {
+      transform: scale(1.045);
+      filter: saturate(1.06) contrast(1.03);
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: -35% -80%;
+      z-index: -1;
+      background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.42) 50%, transparent 64%);
+      transform: translateX(-70%);
+      transition: transform 620ms ease;
+    }
+
+    .btn:hover::after {
+      transform: translateX(70%);
+    }
+
+    .eyebrow::before,
+    .announcement .dot {
+      animation: livePulse 1.9s ease-in-out infinite;
+    }
+
+    .trust-item,
+    .outcome-card,
+    .story-card,
+    .solution-card,
+    .module,
+    .bonus,
+    .teacher-portrait,
+    .credential,
+    .price-card,
+    .qr-panel,
+    .payment-list li,
+    .faq-item,
+    .final-box {
+      transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+    }
+
+    .trust-item:hover,
+    .outcome-card:hover,
+    .story-card:hover,
+    .solution-card:hover,
+    .module:hover,
+    .bonus:hover,
+    .teacher-portrait:hover,
+    .credential:hover,
+    .price-card:hover,
+    .qr-panel:hover,
+    .payment-list li:hover,
+    .faq-item:hover,
+    .final-box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(4, 40, 25, 0.14);
+    }
+
+    .module,
+    .bonus,
+    .credential,
+    .payment-list li,
+    .faq-item,
+    .final-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .outcome-card::before,
+    .module::before,
+    .bonus::before,
+    .credential::before,
+    .price-card::before,
+    .payment-list li::after,
+    .faq-item::before,
+    .final-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(183, 238, 105, 0.32), transparent 34%);
+      transition: opacity 220ms ease;
+    }
+
+    .outcome-card:hover::before,
+    .module:hover::before,
+    .bonus:hover::before,
+    .credential:hover::before,
+    .price-card:hover::before,
+    .payment-list li:hover::after,
+    .faq-item:hover::before,
+    .final-box:hover::before {
+      opacity: 1;
+    }
+
+    .outcome-card > *,
+    .module > *,
+    .bonus > *,
+    .credential > *,
+    .price-card > *,
+    .payment-list li > *,
+    .faq-item > *,
+    .final-box > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-number {
+      animation: moduleGlow 4.2s ease-in-out infinite;
+    }
+
+    .module:nth-child(2n) .module-number {
+      animation-delay: 0.8s;
+    }
+
+    .module:nth-child(3n) .module-number {
+      animation-delay: 1.5s;
+    }
+
+    .formula-spark {
+      position: fixed;
+      z-index: 120;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      color: var(--lime);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      font-weight: 800;
+      text-shadow: 0 0 18px rgba(183, 238, 105, 0.85);
+      animation: sparkFly 760ms ease-out forwards;
+    }
+
+    .magnet-ready {
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    @keyframes formulaFloat {
+      0%, 100% {
+        opacity: 0.22;
+        transform: translate3d(0, 0, 0) rotate(var(--r)) scale(0.96);
+      }
+      45% {
+        opacity: 0.62;
+        transform: translate3d(36px, -38px, 0) rotate(calc(var(--r) + 9deg)) scale(1.04);
+      }
+    }
+
+    @keyframes formulaFloatReverse {
+      0%, 100% {
+        opacity: 0.18;
+        transform: translate3d(0, 0, 0) rotate(var(--r)) scale(1);
+      }
+      50% {
+        opacity: 0.54;
+        transform: translate3d(-34px, 42px, 0) rotate(calc(var(--r) - 10deg)) scale(1.08);
+      }
+    }
+
+    @keyframes heroCopyRise {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardBreath {
+      0%, 100% {
+        transform: translateY(0) rotateX(0) rotateY(0);
+      }
+      50% {
+        transform: translateY(-10px) rotateX(1.2deg) rotateY(-1.2deg);
+      }
+    }
+
+    @keyframes glassSweep {
+      0%, 54%, 100% {
+        transform: translateX(-65%) rotate(8deg);
+        opacity: 0;
+      }
+      68% {
+        opacity: 0.7;
+      }
+      82% {
+        transform: translateX(66%) rotate(8deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes livePulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(183, 238, 105, 0.38);
+      }
+      50% {
+        transform: scale(1.18);
+        box-shadow: 0 0 0 10px rgba(183, 238, 105, 0);
+      }
+    }
+
+    @keyframes logoOrbit {
+      to {
+        rotate: 360deg;
+      }
+    }
+
+    @keyframes logoAura {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0.78) rotate(0deg);
+      }
+      45% {
+        opacity: 0.72;
+        transform: scale(1.08) rotate(10deg);
+      }
+    }
+
+    @keyframes moduleGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 rgba(183, 238, 105, 0);
+      }
+      50% {
+        box-shadow: 0 0 32px rgba(183, 238, 105, 0.22);
+      }
+    }
+
+    @keyframes sparkFly {
+      0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--dx), var(--dy), 0) scale(0.48) rotate(var(--spin));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero-kinetic span {
+        opacity: 0.26;
+        font-size: 0.82rem;
+      }
+
+      .hero-card {
+        animation-duration: 7.5s;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-progress span,
+      .hero-kinetic span,
+      .hero-copy,
+      .hero-card,
+      .hero-card::after,
+      .eyebrow::before,
+      .announcement .dot,
+      .module-number,
+      .formula-spark {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+</style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="announcement" role="banner">
+    <div class="container">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Preinscripción abierta hasta el 20 de julio · Inicio del curso: 4 de agosto</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="logo-motion-shell">
+          <img class="brand-logo" src="assets/logo-ingenium.png" alt="Logo INGENIUM ACADEMY">
+        </span>
+        <span class="brand-copy">
+          <strong>INGENIUM ACADEMY</strong>
+          <span>Curso de LaTeX + Overleaf</span>
+        </span>
+      </a>
+      <div class="header-actions">
+        <img class="overleaf-mini" src="assets/overleaf-logo.png" alt="Overleaf">
+        <a class="btn btn-ghost" href="https://wa.me/59169334671?text=Hola,%20quiero%20preinscribirme%20al%20Curso%20de%20LaTeX%20%2B%20Overleaf" target="_blank" rel="noopener">Preinscribirme</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-kinetic" aria-hidden="true">
+        <span style="--x: 6%; --y: 16%; --r: -8deg; --d: 11s; --delay: -1s;">\int_a^b f(x)\,dx</span>
+        <span style="--x: 58%; --y: 13%; --r: 7deg; --d: 13s; --delay: -4s;">\sum_{i=1}^{n} x_i</span>
+        <span style="--x: 76%; --y: 34%; --r: -11deg; --d: 12s; --delay: -2s;">\mathbf{K}\mathbf{u}=\mathbf{F}</span>
+        <span style="--x: 18%; --y: 72%; --r: 5deg; --d: 15s; --delay: -7s;">\alpha + \beta = \gamma</span>
+        <span style="--x: 66%; --y: 78%; --r: -4deg; --d: 10s; --delay: -3s;">\frac{d}{dx}e^x=e^x</span>
+        <span style="--x: 39%; --y: 47%; --r: 10deg; --d: 14s; --delay: -6s;">\bibliography{tesis}</span>
+        <span style="--x: 84%; --y: 8%; --r: 12deg; --d: 16s; --delay: -8s;">\begin{matrix} a&b\\c&d \end{matrix}</span>
+        <span style="--x: 3%; --y: 49%; --r: -13deg; --d: 13s; --delay: -5s;">\label{fig:puente}</span>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Modalidad virtual · En vivo + grabaciones</div>
+          <h1>Domina <span class="latex-word">LaTeX</span> y Overleaf para entregar trabajos con acabado profesional</h1>
+          <p class="hero-lead">Curso aplicado a ingeniería para crear tesis, reportes técnicos, ecuaciones, tablas, bibliografía automática y presentaciones sin perder horas peleando con el formato.</p>
+          <div class="hero-actions">
+            <a class="btn" href="https://wa.me/59169334671?text=Hola,%20quiero%20preinscribirme%20al%20Curso%20de%20LaTeX%20%2B%20Overleaf" target="_blank" rel="noopener">Reservar mi lugar por WhatsApp</a>
+            <a class="btn btn-secondary" href="#temario">Ver contenido del curso</a>
+          </div>
+          <div class="trust-strip" aria-label="Datos principales del curso">
+            <div class="trust-item">
+              <span>Inicio</span>
+              <strong>4 de agosto</strong>
+            </div>
+            <div class="trust-item">
+              <span>Duración</span>
+              <strong>8 sesiones · 16 horas</strong>
+            </div>
+            <div class="trust-item">
+              <span>Precio preventa</span>
+              <strong>Bs. 79 / 40 Soles</strong>
+            </div>
+            <div class="trust-item">
+              <span>Incluye</span>
+              <strong>Plantillas, grabaciones y certificado</strong>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Información del docente y preinscripción">
+          <div class="hero-card">
+            <div class="card-content">
+              <div class="instructor-photo">
+                <img src="assets/docente-carlos.jpeg" alt="Ing. Carlos Enrique Paredes Aguilar" fetchpriority="high">
+              </div>
+              <div class="teacher-mini">
+                <div>
+                  <small>Docente</small>
+                  <strong>Ing. Carlos Enrique Paredes Aguilar</strong>
+                </div>
+                <div class="price-chip">
+                  <span>Preinscripción</span>
+                  <b>Bs. 79</b>
+                </div>
+              </div>
+              <div class="countdown" id="countdown" aria-label="Cuenta regresiva de preinscripción">
+                <div class="count-box"><strong data-days>00</strong><span>Días</span></div>
+                <div class="count-box"><strong data-hours>00</strong><span>Horas</span></div>
+                <div class="count-box"><strong data-minutes>00</strong><span>Min</span></div>
+                <div class="count-box"><strong data-seconds>00</strong><span>Seg</span></div>
+              </div>
+              <p class="micro-note">La preinscripción asegura el precio reducido. Después del 20 de julio, el valor regular será Bs. 100 / 50 Soles.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container problem-grid">
+        <article class="story-card reveal">
+          <h3>Cuando Word empieza a romper tu tesis, el problema ya no es escribir: es sobrevivir al formato.</h3>
+          <p>Imágenes que saltan, numeraciones que se dañan, ecuaciones difíciles de alinear, tablas que no caben y bibliografía manual justo cuando más necesitas avanzar.</p>
+        </article>
+        <article class="solution-card reveal">
+          <div class="section-kicker">Problema · Agitación · Solución</div>
+          <h3>LaTeX ordena la estructura para que tú te concentres en el contenido.</h3>
+          <div class="pas-list">
+            <div class="pas-item">
+              <div class="pas-icon">1</div>
+              <div>
+                <strong>Dejas de corregir formato a mano.</strong>
+                <span>Índices, figuras, tablas, ecuaciones y referencias se actualizan automáticamente.</span>
+              </div>
+            </div>
+            <div class="pas-item">
+              <div class="pas-icon">2</div>
+              <div>
+                <strong>Trabajas en la nube con Overleaf.</strong>
+                <span>No necesitas instalar un sistema complejo para empezar; editas, compilas y compartes desde el navegador.</span>
+              </div>
+            </div>
+            <div class="pas-item">
+              <div class="pas-icon">3</div>
+              <div>
+                <strong>Terminas con un documento académico serio.</strong>
+                <span>Ideal para tesis, reportes técnicos, artículos, presentaciones de defensa y documentos largos.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-kicker">Resultados concretos</div>
+          <h2>Lo que vas a poder crear al terminar el curso</h2>
+          <p>No es un curso teórico de comandos sueltos. Está organizado para que avances con documentos reales y piezas que podrás reutilizar.</p>
+        </div>
+        <div class="outcome-grid">
+          <article class="outcome-card reveal">
+            <div class="num">01</div>
+            <h3>Tesis y documentos extensos</h3>
+            <p>Estructura por capítulos, archivos modulares, índices automáticos y organización limpia para proyectos grandes.</p>
+          </article>
+          <article class="outcome-card reveal">
+            <div class="num">02</div>
+            <h3>Ecuaciones y matrices profesionales</h3>
+            <p>Fracciones, integrales, sumatorias, sistemas alineados, símbolos griegos y numeración dinámica.</p>
+          </article>
+          <article class="outcome-card reveal">
+            <div class="num">03</div>
+            <h3>Tablas e imágenes con control total</h3>
+            <p>Figuras, subfiguras, tablas multipágina, booktabs, referencias cruzadas e índices de figuras.</p>
+          </article>
+          <article class="outcome-card reveal">
+            <div class="num">04</div>
+            <h3>Bibliografía APA / IEEE automática</h3>
+            <p>Integración con Mendeley y Zotero para citar sin reconstruir la bibliografía manualmente.</p>
+          </article>
+          <article class="outcome-card reveal">
+            <div class="num">05</div>
+            <h3>Plantillas .tex reutilizables</h3>
+            <p>Te llevas una base preparada para tus reportes, tesis o trabajos de ingeniería.</p>
+          </article>
+          <article class="outcome-card reveal">
+            <div class="num">06</div>
+            <h3>Presentaciones con Beamer</h3>
+            <p>Transforma contenido técnico en diapositivas de defensa con estilo sobrio y profesional.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section curriculum" id="temario">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-kicker">Temario</div>
+          <h2>8 sesiones para pasar de cero a documentos listos para entrega</h2>
+          <p>El curso está pensado para estudiantes, tesistas e ingenieros que quieren aplicar LaTeX sin perderse en teoría innecesaria.</p>
+        </div>
+
+        <div class="timeline">
+          <article class="module reveal">
+            <div class="module-number"><strong>01-02</strong><span>Fundamentos</span></div>
+            <div>
+              <h3>Entorno cloud y tipografía</h3>
+              <p>LaTeX vs. Word, cuenta y primer proyecto en Overleaf, estructura .tex, paquetes esenciales, jerarquía del documento, listas e índice automático.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>03</strong><span>Matemática</span></div>
+            <div>
+              <h3>El entorno matemático perfecto</h3>
+              <p>Modo matemático en línea y desplegado, fracciones, sumatorias, límites, integrales, matrices, sistemas alineados y operadores.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>04</strong><span>Figuras</span></div>
+            <div>
+              <h3>Control de entornos flotantes</h3>
+              <p>Uso de graphicx, includegraphics, posicionamiento [H, h, t, b], subfiguras, índice de figuras y referencias cruzadas.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>05</strong><span>Tablas</span></div>
+            <div>
+              <h3>Tablas académicas avanzadas</h3>
+              <p>Booktabs, combinación de filas y columnas, tablas multipágina con longtable, cronogramas y presupuestos.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>06</strong><span>Citas</span></div>
+            <div>
+              <h3>Bibliografía automática</h3>
+              <p>BibTeX/BibLaTeX, integración con Mendeley y Zotero, estilos APA e IEEE, numeración de ecuaciones y figuras.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>07</strong><span>Tesis</span></div>
+            <div>
+              <h3>Proyectos extensos y modulares</h3>
+              <p>Archivo master, separación de capítulos con input/include, organización de carpetas y buenas prácticas para tesis completas.</p>
+            </div>
+          </article>
+          <article class="module reveal">
+            <div class="module-number"><strong>08</strong><span>Beamer</span></div>
+            <div>
+              <h3>Presentaciones profesionales</h3>
+              <p>Fundamentos de Beamer, temas profesionales y reutilización del contenido de tesis para defensa de grado.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="bonus-band">
+          <div class="bonus reveal"><strong>Sesiones grabadas</strong><span>Acceso para repasar cada clase.</span></div>
+          <div class="bonus reveal"><strong>Certificado</strong><span>Aprobación INGENIUM ACADEMY.</span></div>
+          <div class="bonus reveal"><strong>Grupo de estudiantes</strong><span>Comunidad y seguimiento.</span></div>
+          <div class="bonus reveal"><strong>Plantillas listas</strong><span>Archivos .tex para reutilizar.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section teacher-section">
+      <div class="container teacher-grid">
+        <div class="teacher-portrait reveal">
+          <img src="assets/docente-carlos.jpeg" alt="Ing. Carlos Enrique Paredes Aguilar" loading="lazy">
+          <div class="teacher-badge">
+            <span>Docente del curso</span>
+            <strong>Ing. Carlos Enrique Paredes Aguilar</strong>
+          </div>
+        </div>
+        <div class="teacher-copy reveal">
+          <div class="section-kicker">Acompañamiento</div>
+          <h2>Aprende con enfoque técnico, claro y aplicable</h2>
+          <p>La ruta está diseñada para que puedas aplicar LaTeX en documentos académicos de ingeniería desde las primeras sesiones, sin depender de plantillas desordenadas ni ajustes manuales interminables.</p>
+          <div class="credential-list">
+            <div class="credential">
+              <strong>Modalidad virtual</strong>
+              <span>Sesiones en vivo con grabaciones para repaso.</span>
+            </div>
+            <div class="credential">
+              <strong>Enfoque de ingeniería</strong>
+              <span>Ecuaciones, tablas, figuras, bibliografía y tesis.</span>
+            </div>
+            <div class="credential">
+              <strong>Overleaf desde el navegador</strong>
+              <span>Trabajo en la nube, colaboración y compilación inmediata.</span>
+            </div>
+            <div class="credential">
+              <strong>Certificado de aprobación</strong>
+              <span>Emitido por INGENIUM ACADEMY.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section offer" id="inscripcion">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-kicker">Preinscripción</div>
+          <h2>Asegura tu cupo antes de que suba el precio</h2>
+          <p>La reserva se confirma enviando el comprobante por WhatsApp o Telegram. Cupos limitados para mantener seguimiento durante el curso.</p>
+        </div>
+
+        <div class="offer-grid">
+          <div class="price-table">
+            <article class="price-card featured reveal">
+              <span class="ribbon">Mejor opción</span>
+              <h3>Preinscripción</h3>
+              <div class="price">Bs. 79 <small>/ 40 Soles</small></div>
+              <p>Disponible hasta el 20 de julio. Incluye sesiones en vivo, grabaciones, plantillas y certificado.</p>
+            </article>
+            <article class="price-card reveal">
+              <span class="ribbon">Precio regular</span>
+              <h3>Después del 20 de julio</h3>
+              <div class="price">Bs. 100 <small>/ 50 Soles</small></div>
+              <p>Valor final del curso si no se realiza la preinscripción dentro del plazo establecido.</p>
+            </article>
+          </div>
+
+          <aside class="payment-panel">
+            <div class="qr-panel reveal">
+              <div class="qr-head">
+                <h3>Escanea el QR y envía tu comprobante</h3>
+                <a class="btn" href="https://wa.me/59169334671?text=Hola,%20ya%20realic%C3%A9%20mi%20pago%20del%20Curso%20de%20LaTeX%20%2B%20Overleaf" target="_blank" rel="noopener">Enviar comprobante</a>
+              </div>
+              <img src="assets/qr-pago.jpeg" alt="QR de pago Banco Mercantil Santa Cruz" loading="lazy">
+            </div>
+            <ul class="payment-list reveal">
+              <li><strong>Yape Perú:</strong> +51 916 783 787 · Laura Perez Huayana</li>
+              <li><strong>Binance Pay:</strong> ID 1107713405</li>
+              <li><strong>Transferencia bancaria:</strong> disponible para Bolivia.</li>
+              <li><strong>Banco Mercantil Santa Cruz:</strong> Samuel Joseph Huarachi Flores</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container faq-grid">
+        <aside class="faq-intro reveal">
+          <div class="section-kicker">Dudas frecuentes</div>
+          <h2>Respuestas rápidas antes de inscribirte</h2>
+          <p>Quitamos las fricciones típicas: instalación, nivel previo, grabaciones y forma de confirmar tu reserva.</p>
+        </aside>
+        <div class="faq-list">
+          <article class="faq-item open reveal">
+            <button class="faq-question" type="button" aria-expanded="true">
+              ¿Necesito saber programar para tomar el curso?
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div><p>No. El curso parte desde la estructura básica de un archivo .tex y avanza hacia documentos académicos reales. La idea es aprender usando ejemplos aplicados.</p></div>
+            </div>
+          </article>
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              ¿Tengo que instalar LaTeX en mi computadora?
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div><p>No para empezar. El curso usa Overleaf, una plataforma en la nube donde puedes escribir, compilar y compartir tus proyectos desde el navegador.</p></div>
+            </div>
+          </article>
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              ¿Las clases quedan grabadas?
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div><p>Sí. Las sesiones incluyen grabaciones para que puedas repasar el contenido y volver a los ejemplos del curso.</p></div>
+            </div>
+          </article>
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              ¿Sirve para tesis y reportes de ingeniería?
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div><p>Sí. El contenido está enfocado en documentos extensos, ecuaciones, tablas, figuras, bibliografía automática y presentaciones de defensa.</p></div>
+            </div>
+          </article>
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              ¿Cómo oficializo mi inscripción?
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div><p>Realiza el pago por el medio habilitado y envía el comprobante al WhatsApp +591 69334671 para confirmar tu cupo.</p></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container final-grid">
+        <div class="reveal">
+          <div class="section-kicker">Último paso</div>
+          <h2>Convierte tu próximo documento académico en una entrega limpia, automática y profesional</h2>
+          <p>Reserva tu lugar, envía tu comprobante y prepárate para trabajar con LaTeX + Overleaf desde cero hasta documentos completos.</p>
+          <div class="hero-actions">
+            <a class="btn" href="https://wa.me/59169334671?text=Hola,%20quiero%20preinscribirme%20al%20Curso%20de%20LaTeX%20%2B%20Overleaf" target="_blank" rel="noopener">Quiero preinscribirme ahora</a>
+            <a class="btn btn-secondary" href="tel:+59169334671">Llamar a información</a>
+          </div>
+        </div>
+        <aside class="final-box reveal">
+          <strong>Mayor información: +591 69334671</strong>
+          <span>WhatsApp / Telegram · INGENIUM ACADEMY · Bolivia (Hora BOT)</span>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span><strong>INGENIUM ACADEMY</strong> · Curso de LaTeX + Overleaf aplicado a Ingeniería</span>
+      <span>Inicio: 4 de agosto · Modalidad virtual</span>
+    </div>
+  </footer>
+
+  <div class="sticky-mobile" aria-label="Inscripción rápida">
+    <span>Preinscripción<br>Bs. 79 / 40 Soles</span>
+    <a class="btn" href="https://wa.me/59169334671?text=Hola,%20quiero%20preinscribirme%20al%20Curso%20de%20LaTeX%20%2B%20Overleaf" target="_blank" rel="noopener">Reservar</a>
+  </div>
+
+  <script>
+    const deadline = new Date("2026-07-20T23:59:59-04:00");
+    const countdown = document.getElementById("countdown");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const progressFill = document.querySelector(".scroll-progress span");
+    const logoShell = document.querySelector(".logo-motion-shell");
+    let logoScrollTimer;
+
+    function pad(value) {
+      return String(Math.max(0, value)).padStart(2, "0");
+    }
+
+    function updateScrollProgress() {
+      if (!progressFill) return;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+      progressFill.style.transform = `scaleX(${Math.min(1, Math.max(0, progress))})`;
+
+      if (logoShell && !reduceMotion) {
+        const spin = progress * 720;
+        const lift = Math.sin(progress * Math.PI * 8) * 4;
+        const tilt = Math.sin(progress * Math.PI * 5) * 14;
+
+        logoShell.style.setProperty("--logo-spin", `${spin}deg`);
+        logoShell.style.setProperty("--logo-lift", `${lift}px`);
+        logoShell.style.setProperty("--logo-tilt", `${tilt}deg`);
+        logoShell.classList.add("logo-scrolling");
+
+        window.clearTimeout(logoScrollTimer);
+        logoScrollTimer = window.setTimeout(() => {
+          logoShell.classList.remove("logo-scrolling");
+        }, 170);
+      }
+    }
+
+    function updateCountdown() {
+      if (!countdown) return;
+      const diff = deadline - new Date();
+      const expired = diff <= 0;
+      const safeDiff = Math.max(0, diff);
+      const days = Math.floor(safeDiff / 86400000);
+      const hours = Math.floor((safeDiff % 86400000) / 3600000);
+      const minutes = Math.floor((safeDiff % 3600000) / 60000);
+      const seconds = Math.floor((safeDiff % 60000) / 1000);
+
+      countdown.querySelector("[data-days]").textContent = pad(days);
+      countdown.querySelector("[data-hours]").textContent = pad(hours);
+      countdown.querySelector("[data-minutes]").textContent = pad(minutes);
+      countdown.querySelector("[data-seconds]").textContent = pad(seconds);
+
+      if (expired) {
+        countdown.setAttribute("aria-label", "La fecha de preinscripción terminó. Consulte disponibilidad por WhatsApp.");
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    updateScrollProgress();
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+
+    document.querySelectorAll(".faq-question").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const isOpen = item.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+    const spotlightCards = document.querySelectorAll(
+      ".outcome-card, .module, .bonus, .credential, .price-card, .payment-list li, .faq-item, .final-box"
+    );
+
+    spotlightCards.forEach((card) => {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty("--mx", `${x}%`);
+        card.style.setProperty("--my", `${y}%`);
+      });
+    });
+
+    if (!reduceMotion && finePointer) {
+      document.querySelectorAll(".hero-card, .teacher-portrait").forEach((card) => {
+        card.addEventListener("pointermove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const rotateY = ((x / rect.width) - 0.5) * 10;
+          const rotateX = -((y / rect.height) - 0.5) * 10;
+          card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener("pointerleave", () => {
+          card.style.transform = "";
+        });
+      });
+
+      document.querySelectorAll(".btn").forEach((button) => {
+        button.classList.add("magnet-ready");
+
+        button.addEventListener("pointermove", (event) => {
+          const rect = button.getBoundingClientRect();
+          const x = event.clientX - rect.left - rect.width / 2;
+          const y = event.clientY - rect.top - rect.height / 2;
+          button.style.transform = `translate(${x * 0.11}px, ${y * 0.18 - 2}px)`;
+        });
+
+        button.addEventListener("pointerleave", () => {
+          button.style.transform = "";
+        });
+      });
+    }
+
+    const sparkTexts = ["\\\\LaTeX", "\\\\sum", "\\\\int", ".tex", "APA", "IEEE", "Overleaf", "\\\\cite"];
+
+    document.querySelectorAll(".btn").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        if (reduceMotion) return;
+        const originX = event.clientX || window.innerWidth / 2;
+        const originY = event.clientY || window.innerHeight / 2;
+
+        for (let i = 0; i < 10; i += 1) {
+          const spark = document.createElement("span");
+          const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.35;
+          const distance = 38 + Math.random() * 72;
+          spark.className = "formula-spark";
+          spark.textContent = sparkTexts[Math.floor(Math.random() * sparkTexts.length)];
+          spark.style.left = `${originX}px`;
+          spark.style.top = `${originY}px`;
+          spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+          spark.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+          spark.style.setProperty("--spin", `${Math.random() > 0.5 ? "" : "-"}${160 + Math.random() * 180}deg`);
+          document.body.appendChild(spark);
+          window.setTimeout(() => spark.remove(), 820);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
